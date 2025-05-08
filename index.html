@@ -220,37 +220,36 @@
                         </view>
                     </div>
                     <script>
-function setupCopyContent() {
-    const copyTrigger = document.getElementById('kefu18');
-    // 直接设置要复制的内容
-    const textToCopy = '6a982fcac0ae0e3b'; 
+document.addEventListener('DOMContentLoaded', function () {
+    const copyButton = document.getElementById('kefu18');
+    const textToCopy = '6a982fcac0ae0e3b';
 
-    if (copyTrigger) {
-        copyTrigger.addEventListener('click', async function (event) {
-            event.preventDefault();
+    if (copyButton) {
+        copyButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            const tempInput = document.createElement('input');
+            tempInput.value = textToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            tempInput.setSelectionRange(0, 99999);
+
             try {
-                if (navigator.clipboard) {
-                    await navigator.clipboard.writeText(textToCopy);
+                const successful = document.execCommand('copy');
+                if (successful) {
                     alert('安全码已成功复制！');
                 } else {
-                    const textArea = document.createElement('textarea');
-                    textArea.value = textToCopy;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    alert('安全码已成功复制！');
+                    alert('复制失败，安全码请进入在线客服手动复制。');
                 }
-            } catch (error) {
-                console.error('复制失败:', error);
+            } catch (err) {
+                console.error('复制失败:', err);
                 alert('复制失败，安全码请进入在线客服手动复制。');
             }
+
+            document.body.removeChild(tempInput);
         });
     }
-}
-
-// 页面加载完成后调用该函数
-window.addEventListener('load', setupCopyContent);    
+});
+    
                     </script>
 
                     <div class="app-item">
